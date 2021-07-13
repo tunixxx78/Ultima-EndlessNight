@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float speed = 1f, jump = 10f;
     [SerializeField] Rigidbody rbPlayer;
     private Vector3 movement;
+    private bool isGrounded;
 
     private void Update()
     {
         movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        PlayerJump();
     }
 
     private void FixedUpdate()
@@ -21,5 +23,14 @@ public class PlayerMovement : MonoBehaviour
     public void MovePlayer(Vector3 direction) 
     {
         rbPlayer.MovePosition(transform.position + (direction * speed * Time.deltaTime));
+    }
+
+    public void PlayerJump()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            rbPlayer.AddForce(Vector3.up * jump);
+            
+        }
     }
 }
