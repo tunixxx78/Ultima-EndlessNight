@@ -24,4 +24,9 @@ public class EnemyAi : MonoBehaviour
 
         
     }
+
+    public void AddSpeed()
+    {
+        enemySpeed += 1;
+    }
 }

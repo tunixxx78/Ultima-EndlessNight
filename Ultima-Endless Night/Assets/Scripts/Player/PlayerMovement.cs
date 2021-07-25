@@ -10,10 +10,20 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movement;
     private bool isGrounded;
 
+    private void Start()
+    {
+        FindObjectOfType<CollectiblesSpawmer>().SpawnNewCollectible(); 
+    }
+
     private void Update()
     {
         movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         PlayerJump();
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 
     }
 
@@ -41,6 +51,16 @@ public class PlayerMovement : MonoBehaviour
         if (collision.collider.CompareTag("Enemy"))
         {
             player.SetActive(false);
+        }
+        if (collision.collider.CompareTag("Collectible"))
+        {
+            FindObjectOfType<CollectiblesSpawmer>().SpawnNewCollectible();
+        }
+        if (collision.collider.CompareTag("Collectible"))
+        {
+            FindObjectOfType<DestroyCollectible>().DestroyMe();
+            FindObjectOfType<EnemyAi>().AddSpeed();
+            //FindObjectOfType<CollectiblesSpawnPoint>().DestroyMeToo();
         }
     }
 }
