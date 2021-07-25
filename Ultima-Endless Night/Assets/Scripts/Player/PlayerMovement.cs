@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 1f, jump = 10f;
+    [SerializeField] private GameObject player;
     [SerializeField] Rigidbody rbPlayer;
     private Vector3 movement;
     private bool isGrounded;
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     {
         movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         PlayerJump();
+
     }
 
     private void FixedUpdate()
@@ -31,6 +33,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rbPlayer.AddForce(Vector3.up * jump);
             
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            player.SetActive(false);
         }
     }
 }
