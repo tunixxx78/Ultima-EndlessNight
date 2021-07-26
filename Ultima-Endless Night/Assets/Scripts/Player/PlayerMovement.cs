@@ -12,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        FindObjectOfType<CollectiblesSpawmer>().SpawnNewCollectible(); 
+        FindObjectOfType<CollectiblesSpawmer>().SpawnNewCollectible();
+        ScoringSystem.theScore = 0;
     }
 
     private void Update()
@@ -51,10 +52,12 @@ public class PlayerMovement : MonoBehaviour
         if (collision.collider.CompareTag("Enemy"))
         {
             player.SetActive(false);
+            FindObjectOfType<ScoringSystem>().ShowGameOverStuff();
         }
         if (collision.collider.CompareTag("Collectible"))
         {
             FindObjectOfType<CollectiblesSpawmer>().SpawnNewCollectible();
+            ScoringSystem.theScore += 1;
         }
         if (collision.collider.CompareTag("Collectible"))
         {
