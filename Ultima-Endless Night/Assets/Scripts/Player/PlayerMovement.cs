@@ -40,15 +40,21 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rbPlayer.AddForce(Vector3.up * jump);
-            
+            isGrounded = false;
         }
     }
 
+    
+
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
         if (collision.collider.CompareTag("Enemy"))
         {
             player.SetActive(false);
