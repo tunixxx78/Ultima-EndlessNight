@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody rbPlayer;
     private Vector3 movement;
     private bool isGrounded;
+    [SerializeField] Animator toniAnimator;
 
     private void Start()
     {
@@ -35,7 +36,23 @@ public class PlayerMovement : MonoBehaviour
 
     public void MovePlayer(Vector3 direction) 
     {
+        float x = Input.GetAxis("Horizontal");
+
         rbPlayer.MovePosition(transform.position + (direction * speed * Time.deltaTime));
+
+        toniAnimator.SetBool("Run", x != 0);
+        Vector3 CharacterScale = transform.localScale;
+
+        if(x > 0)
+        {
+            CharacterScale.x = -1f;
+        }
+        if(x < 0)
+        {
+            CharacterScale.x = 1f;
+        }
+
+        transform.localScale = CharacterScale;
     }
 
     public void PlayerJump()
